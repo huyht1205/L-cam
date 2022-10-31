@@ -6,6 +6,8 @@ set(BSP_SOURCES
     ${BSP_DIR}/Core/Src/jpeg.c
     ${BSP_DIR}/Core/Src/rtc.c
     ${BSP_DIR}/Core/Src/usart.c
+    ${BSP_DIR}/Core/Src/dma.c
+    ${BSP_DIR}/Core/Src/i2c.c
     ${BSP_DIR}/Core/Src/stm32h7xx_it.c
     ${BSP_DIR}/Core/Src/stm32h7xx_hal_msp.c
     ${BSP_DIR}/Core/Src/stm32h7xx_hal_timebase_tim.c

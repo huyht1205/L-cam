@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "dma.h"
+#include "i2c.h"
 #include "jpeg.h"
 #include "rtc.h"
 #include "usart.h"
@@ -98,6 +100,8 @@ void MX_FREERTOS_Init(void);
 //   MX_USART3_UART_Init();
 //   MX_JPEG_Init();
 //   MX_RTC_Init();
+//   MX_I2C2_Init();
+//   MX_DMA_Init();
 //   /* USER CODE BEGIN 2 */
 
 //   /* USER CODE END 2 */
@@ -112,12 +116,12 @@ void MX_FREERTOS_Init(void);
 //   /* We should never get here as control is now taken by the scheduler */
 //   /* Infinite loop */
 //   /* USER CODE BEGIN WHILE */
-//   while (1)
-//   {
+// //   while (1)
+// //   {
 //     /* USER CODE END WHILE */
 
 //     /* USER CODE BEGIN 3 */
-//   }
+// //   }
 //   /* USER CODE END 3 */
 // }
 
