@@ -4,3 +4,5 @@ cmake_minimum_required(VERSION 3.15)
 
 set(PLATFORM_DIR    ${CMAKE_SOURCE_DIR}/platform/${PLATFORM})
 set(BSP_DIR         ${CMAKE_SOURCE_DIR}/bsp/${BSP})
+set(PERIPHERALS_DIR ${CMAKE_SOURCE_DIR}/peripherals)
+set(BUS_DIR         ${CMAKE_SOURCE_DIR}/platform/bus)

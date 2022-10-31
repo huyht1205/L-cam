@@ -14,6 +14,8 @@ include("cmake/arm-none-eabi-gcc.cmake")
 include("cmake/toolchain.cmake")
 include("${PLATFORM_DIR}/${PLATFORM}.cmake")
 include("${BSP_DIR}/${BSP}.cmake")
+include("${PERIPHERALS_DIR}/peripherals.cmake")
+include("${BUS_DIR}/bus.cmake")
 
 project(${PROJECT_NAME} C CXX ASM)
 
@@ -25,6 +27,7 @@ set(CMAKE_C_STANDARD 99)
 include_directories(
     .
     application/inc
+    peripherals/inc
     )
 
 add_compile_definitions(
@@ -42,7 +45,10 @@ file(GLOB_RECURSE SOURCES
     ${BSP_ASM_SOURCES}
     ${BSP_SOURCES}
     ${PLATFORM_SOURCES}
+    ${PERIPHERALS_SOURCES}
     )
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 post_build(${PROJECT_NAME})
+include("cmake/doxygen.cmake")
+set(BUILD_WITH_DOCS ON)
