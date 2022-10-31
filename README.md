@@ -18,6 +18,9 @@ L means Luck!
 ## Architecture
 *Overview*
 ![](Pictures/Architecture-1.png)
+
+<hr />
+
 *Embedded Software Architecture*
 ![](Pictures/Architecture-2.png)
 
