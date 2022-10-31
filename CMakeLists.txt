@@ -49,6 +49,5 @@ file(GLOB_RECURSE SOURCES
     )
 
 include("cmake/doxygen.cmake")
-set(BUILD_WITH_DOCS ON)
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 post_build(${PROJECT_NAME})
