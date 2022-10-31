@@ -1,11 +1,22 @@
 find_package(Doxygen)
 
-get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-
 IF(DOXYGEN_FOUND)
     MESSAGE(STATUS "Doxygen found: ${DOXYGEN_EXECUTABLE} -- ${DOXYGEN_VERSION}")
 	# Set Doxygen input and output files.
-	SET(DOXYGEN_INPUT_DIR ${dirs})
+	get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+	foreach(dir ${dirs})
+		SET(DOXYGEN_INPUT_DIR "${DOXYGEN_INPUT_DIR} ${dir}")
+		message(STATUS "dir=${dir}")
+	endforeach()
+
+	SET(EXCLUDE_PATTERN
+		"*/bsp/*"
+	)
+	foreach(excludePattern ${EXCLUDE_PATTERN})
+		SET(DOXYGEN_EXCLUDE_PATTERN "${DOXYGEN_EXCLUDE_PATTERN} ${excludePattern}")
+	endforeach()
+	message(STATUS "excl=${DOXYGEN_EXCLUDE_PATTERN}")
+
 	SET(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doxygen)
 	SET(DOXYGEN_INDEX_FILE ${DOXYGEN_OUTPUT_DIR}/xml/index.xml)
 	SET(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
