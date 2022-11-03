@@ -28,5 +28,5 @@ L means Luck!
 ## Early prototype
 
 *Prototype as of Oct 31, 2022*
-![](Pictures/Prototype_Oct31-2022.JPG)
+![](Pictures/Prototype_Nov3-2022.JPG)
 
