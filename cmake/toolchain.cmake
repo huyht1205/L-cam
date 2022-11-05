@@ -1,9 +1,13 @@
+include("cmake/arm-none-eabi-gcc.cmake")
+
+enable_language(ASM C CXX)
+
 add_compile_options(
     -Og
     -Wall
     -fdata-sections
     -ffunction-sections
-    -g -gdwarf-2
+    -g3 -gdwarf-2
     )
 
 # Suspended warnings
@@ -18,20 +22,30 @@ add_compile_options(
 # For C++
 add_compile_options(
     -fno-exceptions # Remove exception to save FLASH
-    -fno-rtti # Remove RTTI (dynamic_cast) to save FLASH
+    -fstack-usage
     )
 
-add_compile_options($<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>)
+add_compile_options(
+    $<$<COMPILE_LANGUAGE:ASM>:-x$<SEMICOLON>assembler-with-cpp>
+    )
+
+add_compile_options(
+    $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++20>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-use-cxa-atexit>
+    $<$<COMPILE_LANGUAGE:CXX>:-Wno-volatile>
+    )
+
+add_compile_options(
+    $<$<COMPILE_LANGUAGE:C>:-std=gnu99>
+    )
 
 add_link_options(
-    ${C_OPTS_MCU}
     -specs=nano.specs
     -Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_NAME}.map
     -specs=nosys.specs
     -specs=nano.specs
     -Xlinker
-    # -Wl,--defsym=malloc_getpagesize_P=0x80
-    -lc -lm -lnosys
     )
 
 

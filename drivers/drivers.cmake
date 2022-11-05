@@ -1,0 +1,11 @@
+include ("${CMAKE_CURRENT_LIST_DIR}/device/device.cmake")
+include ("${CMAKE_CURRENT_LIST_DIR}/pmu/pmu.cmake")
+include ("${CMAKE_CURRENT_LIST_DIR}/platform/bus/bus.cmake")
+include ("${CMAKE_CURRENT_LIST_DIR}/platform/stm32/stm32.cmake")
+
+set(DRIVERS_SOURCES
+    ${DEVICE_SOURCES}
+    ${PMU_SOURCES}
+    ${BUS_SOURCES}
+    ${STM32_SOURCES}
+    )

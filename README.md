@@ -30,3 +30,8 @@ L means Luck!
 *Prototype as of Oct 31, 2022*
 ![](Pictures/Prototype_Nov3-2022.JPG)
 
+
+## Reference
+* STM32H747xI: https://www.st.com/en/microcontrollers-microprocessors/stm32h747ai.html#overview
+* Arduino Nicla Vision: https://docs.arduino.cc/hardware/nicla-vision
+
