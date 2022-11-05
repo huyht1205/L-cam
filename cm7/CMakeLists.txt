@@ -15,6 +15,7 @@ include("cmake/user-config.cmake")
 include("cmake/path.cmake")
 include("${DRIVERS_DIR}/drivers.cmake")
 include("${BSP_DIR}/${BSP}.cmake")
+include("${OS_DIR}/os.cmake")
 
 include_directories(
     .
@@ -37,7 +38,7 @@ file(GLOB_RECURSE SOURCES
     ${APP_SOURCES}
     )
 
-# include("cmake/doxygen.cmake")
+include("cmake/doxygen.cmake")
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 post_build(${PROJECT_NAME})
 set(make)

@@ -34,4 +34,5 @@ L means Luck!
 ## Reference
 * STM32H747xI: https://www.st.com/en/microcontrollers-microprocessors/stm32h747ai.html#overview
 * Arduino Nicla Vision: https://docs.arduino.cc/hardware/nicla-vision
+* NXP PMIC PF1550: https://www.nxp.com/docs/en/data-sheet/PF1550.pdf
 
