@@ -34,7 +34,7 @@ class Bus
      * @param dma_event_config [IN] Config OS event
      * @return int 0: OK, others: error
      */
-    int enable_dma( os::event_config_t *dma_event_config );
+    int enable_dma( os::event_attr_t *dma_event_config );
 
     /**
      * @brief Blocking read data from bus without DMA.
@@ -118,8 +118,9 @@ class Bus
     void dma_interrupt_cb( dma_cb_type type );
 
   protected:
-    void *handler; /* Device handler from HAL of the platform */
-    os::eventID_t dma_event;
+    void *handler;            /* Device handler from HAL of the platform */
+    os::event_id_t dma_event; /* To synchronize thread with DMA event */
+    os::mutex_id_t mutex;     /* Mutex to be thread-safe */
 
     /**
      * @brief Actual hardware read without DMA from the HAL of the platform
@@ -190,6 +191,22 @@ class Bus
                                const uint16_t device_addr,
                                const uint16_t mem_addr,
                                const uint16_t mem_addr_size );
+
+  private:
+    enum class io_direction_t
+    {
+        READ  = 1,
+        WRITE = 2,
+    };
+
+    int io_access( const io_direction_t direction,
+                   const bool dma_enabled,
+                   void *data,
+                   const uint32_t data_len,
+                   const uint32_t timeout,
+                   const uint16_t device_addr,
+                   const uint16_t mem_addr,
+                   const uint16_t mem_addr_size );
 };
 
 #endif // __BUS_HPP__
