@@ -33,7 +33,7 @@ set(APP_SOURCES
     )
 
 set(SOURCES
-    # ${DRIVERS_SOURCES}
+    ${DRIVERS_SOURCES}
     ${BSP_SOURCES}
     ${OS_SOURCES}
     ${APP_SOURCES}

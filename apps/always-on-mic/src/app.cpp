@@ -18,6 +18,7 @@
 #include "rng.h"
 #include "rtc.h"
 #include "gpio.h"
+#include "gpio.hpp"
 
 void SystemClock_Config( void );
 
@@ -54,6 +55,14 @@ int main( void )
     MX_RTC_Init();
     /* USER CODE BEGIN 2 */
 
+    GPIO ld1 = GPIO( GPIO::port_t::C, GPIO::pin_t::PIN_7 );
+    GPIO ld2 = GPIO( GPIO::port_t::B, GPIO::pin_t::PIN_7 );
+    GPIO ld3 = GPIO( GPIO::port_t::B, GPIO::pin_t::PIN_14 );
+
+    ld1.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
+    ld2.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
+    ld3.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
+
     /* USER CODE END 2 */
 
     /* Init scheduler */
@@ -71,9 +80,9 @@ int main( void )
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-        HAL_GPIO_TogglePin( LD3_GPIO_Port, LD3_Pin );
-        HAL_GPIO_TogglePin( LD2_GPIO_Port, LD2_Pin );
-        HAL_GPIO_TogglePin( LD1_GPIO_Port, LD1_Pin );
+        ld1.toggle();
+        ld2.toggle();
+        ld3.toggle();
         HAL_Delay( 1000 );
     }
     /* USER CODE END 3 */

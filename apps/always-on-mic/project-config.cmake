@@ -13,3 +13,9 @@ set(OS "cmsis_os_v2")   # CMSIS_OS_V2 APIs
 # set(BSP "b-l4s5i-iot01a")
 set(BSP "nucleo-l4r5zi-p")
 # ----------------------------------- #
+
+# -------- Select MCU --------------- #
+add_compile_options(
+	-DSTM32L4
+    )
+# ----------------------------------- #
