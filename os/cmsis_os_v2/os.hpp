@@ -53,7 +53,7 @@ inline void init_kernel( void )
 /**
  * @brief Wrapped osEventFlagsNew
  *
- * @param config [IN] wrapped osEventFlagsAttr_t
+ * @param attribute [IN] wrapped osEventFlagsAttr_t
  * @return event_id_t wrapped osEventFlagsId_t
  */
 inline event_id_t event_new( const event_attr_t *attribute )

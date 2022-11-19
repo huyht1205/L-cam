@@ -46,6 +46,10 @@ add_link_options(
     -specs=nosys.specs
     -specs=nano.specs
     -Xlinker
+    -lc
+    -lm
+    -lstdc++
+    -lsupc++
     )
 
 

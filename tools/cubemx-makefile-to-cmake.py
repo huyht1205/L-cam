@@ -17,13 +17,17 @@ class Recipe:
             self.ldscript)
         cmake += "\n"
 
-        cmake += Recipe.create_cmake_list("set(BSP_SOURCES\n", self.c_sources)
+        cmake += Recipe.create_cmake_list(
+            "set(BSP_SOURCES\n",
+            self.c_sources,
+            base_dir="${CMAKE_CURRENT_LIST_DIR}/")
         cmake += "\n"
 
         cmake += Recipe.create_cmake_list(
             "include_directories(\n",
             self.c_include,
-            remove=[' ', '-I'])
+            remove=[' ', '-I'],
+            base_dir="${CMAKE_CURRENT_LIST_DIR}/")
         cmake += "\n"
 
         cmake += Recipe.create_cmake_list("set(MCU_OPTS\n", self.mcu)
@@ -47,12 +51,13 @@ class Recipe:
     @staticmethod
     def create_cmake_list(
             header: str, content: list[str],
-            remove=[' '], footer="\t)\n") -> str:
+            remove=[' '], footer="\t)\n",
+            base_dir="") -> str:
         result = header
         for c in content:
             for s in remove:
                 c = c.strip(s)
-            result += "\t%s\n" % (c)
+            result += "\t%s%s\n" % (base_dir, c)
         result += footer
 
         return result
