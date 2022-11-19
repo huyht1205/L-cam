@@ -7,11 +7,11 @@
 
 typedef void ( *stm32_cubemx_i2c_init )( void );
 
-class I2C_STM32 : public Bus
+class I2C : public BUS
 {
   public:
-    I2C_STM32( void *handler, stm32_cubemx_i2c_init init_fPtr );
-    ~I2C_STM32( void );
+    I2C( void *handler, stm32_cubemx_i2c_init init_fPtr );
+    ~I2C( void );
 
     int init( void ) override;
     int deinit( void ) override;
