@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "cmsis_os.h"
 
-namespace os
+namespace OS
 {
 using thread_id_t   = osThreadId_t;
 using thread_attr_t = osThreadAttr_t;
@@ -48,6 +48,15 @@ inline int delay( const uint32_t tick )
 inline void init_kernel( void )
 {
     osKernelInitialize();
+}
+
+/**
+ * @brief Wrapped osKernelStart
+ *
+ */
+inline void start_kernel( void )
+{
+    osKernelStart();
 }
 
 /**
@@ -155,6 +164,6 @@ inline mutex_id_t mutex_get_owner( mutex_id_t mutex_id )
 {
     return osMutexGetOwner( mutex_id );
 }
-} // namespace os
+} // namespace OS
 
 #endif // __OS_HPP__

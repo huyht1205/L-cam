@@ -3,5 +3,5 @@ include_directories(
     )
 
 set(OS_SOURCES
-	${CMAKE_CURRENT_LIST_DIR}/os.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cmsis_v2/os.cpp
     )
