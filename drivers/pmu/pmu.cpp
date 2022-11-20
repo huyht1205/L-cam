@@ -32,13 +32,3 @@ int PMU::sleep( void )
 {
     return 0;
 }
-
-DeviceState PMU::get_state( void )
-{
-    return DeviceState::UNINIT;
-}
-
-PMU *PMU::get_instance( void )
-{
-    return nullptr;
-}

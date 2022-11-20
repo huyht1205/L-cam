@@ -4,14 +4,14 @@
 DEVICE::DEVICE( void )
 {
     memset( this->name, '\0', sizeof( this->name ) );
-    this->state = DeviceState::UNINIT;
+    state = DEVICE::state_t::UNINIT;
 }
 
 DEVICE::~DEVICE( void )
 {
 }
 
-DeviceState DEVICE::get_state( void )
+DEVICE::state_t DEVICE::get_state( void )
 {
-    return this->state;
+    return state;
 }

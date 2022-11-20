@@ -13,11 +13,9 @@
 #include <string.h>
 #include "system_clock.hpp"
 
-SYSTEM_CLOCK::SYSTEM_CLOCK( system_clock_config_t *config )
+SYSTEM_CLOCK::SYSTEM_CLOCK( const system_clock_config_t *config )
 {
-    memcpy( this->profile_config_functions,
-            config->profile_config_functions,
-            sizeof( config->profile_config_functions ) );
+    this->profile_config_functions = config->profile_config_functions;
 }
 
 SYSTEM_CLOCK::~SYSTEM_CLOCK( void )

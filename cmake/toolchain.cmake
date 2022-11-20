@@ -7,7 +7,7 @@ add_compile_options(
     -Wall
     -fdata-sections
     -ffunction-sections
-    -g3 -gdwarf-2
+    -g -gdwarf-2
     )
 
 # Suspended warnings

@@ -1,4 +1,16 @@
+/**
+ * @file bus.cpp
+ * @author Luck Hoang (huyht1205@pm.me)
+ * @brief
+ * @version 0.1
+ * @date 2022-11-20
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "bus.hpp"
+#include "error.hpp"
 
 BUS::BUS( void )
 {
@@ -17,6 +29,9 @@ int BUS::enable_dma( OS::event_attr_t *dma_event_config )
 
 int BUS::init( void )
 {
+    dma_event = OS::event_new( nullptr );
+    mutex     = OS::mutex_new( nullptr );
+
     return 0;
 }
 
@@ -117,6 +132,7 @@ int BUS::io_access( const io_direction_t direction,
                     const uint16_t mem_addr_size )
 {
     int e                     = 0;
+    int nbyte                 = 0;
     int eventMask             = 0;
     uint32_t begin            = 0;
     uint32_t remainingTimeout = timeout;
@@ -188,10 +204,15 @@ int BUS::io_access( const io_direction_t direction,
         }
     }
 
+    if ( e >= 0 )
+    {
+        nbyte = e;
+    }
+
     if ( true == dma_enabled )
     {
         e = OS::event_wait( this->dma_event, eventMask, 0, timeout );
-        if ( e != 0 )
+        if ( e != NO_ERROR )
         {
             return e;
         }
@@ -199,5 +220,5 @@ int BUS::io_access( const io_direction_t direction,
 
     OS::mutex_release( this->mutex );
 
-    return e;
+    return nbyte;
 }

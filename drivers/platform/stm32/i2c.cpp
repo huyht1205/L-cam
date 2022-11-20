@@ -35,6 +35,7 @@ I2C::~I2C( void )
 
 int I2C::init( void )
 {
+    BUS::init();
     this->cubemx_init();
 
     return 0;
@@ -52,7 +53,7 @@ int I2C::hal_read( void *data,
                    const uint16_t mem_addr,
                    const uint16_t mem_addr_size )
 {
-    int e = 0;
+    HAL_StatusTypeDef e = HAL_ERROR;
 
     e = HAL_I2C_Mem_Read( I2C_HANDLER( this->handler ),
                           device_addr,
@@ -79,7 +80,7 @@ int I2C::hal_write( void *data,
                     const uint16_t mem_addr,
                     const uint16_t mem_addr_size )
 {
-    int e = 0;
+    HAL_StatusTypeDef e = HAL_ERROR;
 
     e = HAL_I2C_Mem_Write( I2C_HANDLER( this->handler ),
                            device_addr,
@@ -104,7 +105,7 @@ int I2C::hal_read_dma( void *data,
                        const uint16_t mem_addr,
                        const uint16_t mem_addr_size )
 {
-    int e = 0;
+    HAL_StatusTypeDef e = HAL_ERROR;
 
     e = HAL_I2C_Mem_Read_DMA( I2C_HANDLER( this->handler ),
                               device_addr,
@@ -128,7 +129,7 @@ int I2C::hal_write_dma( void *data,
                         const uint16_t mem_addr,
                         const uint16_t mem_addr_size )
 {
-    int e = 0;
+    HAL_StatusTypeDef e = HAL_ERROR;
 
     e = HAL_I2C_Mem_Write_DMA( I2C_HANDLER( this->handler ),
                                device_addr,

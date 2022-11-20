@@ -117,8 +117,8 @@ class BUS
 
     void dma_interrupt_cb( dma_cb_type type );
 
+    void *handler; /* Device handler from HAL of the platform */
   protected:
-    void *handler;            /* Device handler from HAL of the platform */
     OS::event_id_t dma_event; /* To synchronize thread with DMA event */
     OS::mutex_id_t mutex;     /* Mutex to be thread-safe */
 

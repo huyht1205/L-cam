@@ -58,6 +58,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define APDS_9960_IRQ_Pin GPIO_PIN_0
+#define APDS_9960_IRQ_GPIO_Port GPIOA
+#define APDS_9960_IRQ_EXTI_IRQn EXTI0_IRQn
 #define LD3_Pin GPIO_PIN_14
 #define LD3_GPIO_Port GPIOB
 #define LD1_Pin GPIO_PIN_7

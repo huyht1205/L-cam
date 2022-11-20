@@ -8,6 +8,7 @@ namespace OS
 {
 using thread_id_t   = osThreadId_t;
 using thread_attr_t = osThreadAttr_t;
+using thread_func_t = osThreadFunc_t;
 
 using event_id_t   = osEventFlagsId_t;
 using event_attr_t = osEventFlagsAttr_t;
@@ -164,6 +165,13 @@ inline mutex_id_t mutex_get_owner( mutex_id_t mutex_id )
 {
     return osMutexGetOwner( mutex_id );
 }
+
+inline thread_id_t
+thread_new( thread_func_t func, void *arg, const thread_attr_t *attr )
+{
+    return osThreadNew( func, arg, attr );
+}
+
 } // namespace OS
 
 #endif // __OS_HPP__

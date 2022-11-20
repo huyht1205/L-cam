@@ -17,6 +17,7 @@ include("drivers/drivers.cmake")
 include("bsp/${BSP}/${BSP}.cmake")
 include("os/os.cmake")
 include("error/error.cmake")
+include("lib/lib.cmake")
 
 include_directories(
     .
@@ -33,6 +34,8 @@ link_libraries(
 set(APP_SOURCES
     src/app.cpp
     bsp/${BSP}/bsp.cpp
+    bsp/${BSP}/bsp_system_clock.cpp
+    bsp/${BSP}/bsp_interrupt_handler.cpp
     )
 
 set(SOURCES
@@ -40,6 +43,7 @@ set(SOURCES
     ${BSP_SOURCES}
     ${OS_SOURCES}
     ${APP_SOURCES}
+    ${LIB_SOURCES}
     )
 
 set(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
