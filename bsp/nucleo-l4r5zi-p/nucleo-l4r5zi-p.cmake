@@ -48,6 +48,7 @@ set(BSP_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+	${CMAKE_CURRENT_LIST_DIR}/Core/Src/i2c.c
 	${CMAKE_CURRENT_LIST_DIR}/startup_stm32l4r5xx.s
 	)
 
@@ -74,8 +75,11 @@ add_link_options(
 	-T ${LINKER_SCRIPT}
 	)
 
+
 add_compile_options(
 	-DUSE_HAL_DRIVER
 	-DSTM32L4R5xx
 	${MCU_OPTS}
 	)
+
+
