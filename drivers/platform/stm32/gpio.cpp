@@ -51,11 +51,15 @@ GPIO::~GPIO( void )
 {
 }
 
-void GPIO::init( GPIO::mode_t mode, GPIO::speed_t speed, GPIO::pull_t pull )
+void GPIO::init( GPIO::mode_t mode,
+                 GPIO::speed_t speed,
+                 GPIO::pull_t pull,
+                 GPIO::interrupt_id_t interrupt )
 {
     this->mode  = mode;
     this->speed = speed;
     this->pull  = pull;
+    this->irqn  = interrupt;
 
     switch ( this->port )
     {
@@ -144,4 +148,11 @@ bool GPIO::get( void )
 {
     return static_cast<bool>( HAL_GPIO_ReadPin(
         HANDLER( this->port ), static_cast<uint16_t>( this->pin ) ) );
+}
+
+void GPIO::write( GPIO::state_t state )
+{
+    HAL_GPIO_WritePin( HANDLER( this->port ),
+                       static_cast<uint16_t>( this->pin ),
+                       static_cast<GPIO_PinState>( state ) );
 }

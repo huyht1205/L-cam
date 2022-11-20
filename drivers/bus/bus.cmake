@@ -1,5 +1,5 @@
 set(BUS_SOURCES
-    ${DRIVERS_DIR}/platform/bus/bus.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/bus.cpp
     )
 
 include_directories(

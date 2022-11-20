@@ -2,13 +2,13 @@
 #define __BUS_HPP__
 
 #include <stdint.h>
-#include "os.hpp"
+#include "OS.hpp"
 
 /**
  * @brief Base abstract class for buses: I2C, SPI, UART
  *
  */
-class Bus
+class BUS
 {
     enum class dma_cb_type : int
     {
@@ -20,21 +20,21 @@ class Bus
     };
 
   public:
-    Bus( void );
-    ~Bus( void );
+    BUS( void );
+    ~BUS( void );
 
     virtual int init( void );
     virtual int deinit( void );
 
     /**
-     * @brief Init os-dependencies for DMA scheduling
+     * @brief Init OS-dependencies for DMA scheduling
      *
-     * @pre os::init_kernel is called before this API.
+     * @pre OS::init_kernel is called before this API.
      *
      * @param dma_event_config [IN] Config OS event
      * @return int 0: OK, others: error
      */
-    int enable_dma( os::event_attr_t *dma_event_config );
+    int enable_dma( OS::event_attr_t *dma_event_config );
 
     /**
      * @brief Blocking read data from bus without DMA.
@@ -119,8 +119,8 @@ class Bus
 
   protected:
     void *handler;            /* Device handler from HAL of the platform */
-    os::event_id_t dma_event; /* To synchronize thread with DMA event */
-    os::mutex_id_t mutex;     /* Mutex to be thread-safe */
+    OS::event_id_t dma_event; /* To synchronize thread with DMA event */
+    OS::mutex_id_t mutex;     /* Mutex to be thread-safe */
 
     /**
      * @brief Actual hardware read without DMA from the HAL of the platform
@@ -138,7 +138,10 @@ class Bus
                           const uint32_t timeout,
                           const uint16_t device_addr,
                           const uint16_t mem_addr,
-                          const uint16_t mem_addr_size );
+                          const uint16_t mem_addr_size )
+    {
+        return 0;
+    }
 
     /**
      * @brief Actual hardware write without DMA from the HAL of the platform
@@ -156,14 +159,16 @@ class Bus
                            const uint32_t timeout,
                            const uint16_t device_addr,
                            const uint16_t mem_addr,
-                           const uint16_t mem_addr_size );
+                           const uint16_t mem_addr_size )
+    {
+        return 0;
+    }
 
     /**
      * @brief Actual hardware read with DMA from the HAL of the platform
      *
      * @param data [OUT]
      * @param data_len [IN]
-     * @param timeout [IN]
      * @param device_addr [IN]
      * @param mem_addr [IN]
      * @param mem_addr_size [IN]
@@ -173,14 +178,16 @@ class Bus
                               const uint32_t data_len,
                               const uint16_t device_addr,
                               const uint16_t mem_addr,
-                              const uint16_t mem_addr_size );
+                              const uint16_t mem_addr_size )
+    {
+        return 0;
+    }
 
     /**
      * @brief Actual hardware write with DMA from the HAL of the platform
      *
      * @param data [IN]
      * @param data_len [IN]
-     * @param timeout [IN]
      * @param device_addr [IN]
      * @param mem_addr [IN]
      * @param mem_addr_size [IN]
@@ -190,7 +197,10 @@ class Bus
                                const uint32_t data_len,
                                const uint16_t device_addr,
                                const uint16_t mem_addr,
-                               const uint16_t mem_addr_size );
+                               const uint16_t mem_addr_size )
+    {
+        return 0;
+    }
 
   private:
     enum class io_direction_t

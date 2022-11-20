@@ -3,5 +3,5 @@ include_directories(
     )
 
 set(DEVICE_SOURCES
-    ${DRIVERS_DIR}/device/device.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/device.cpp
     )

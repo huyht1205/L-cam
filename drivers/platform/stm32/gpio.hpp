@@ -90,18 +90,28 @@ class GPIO
         VERY_HIGH = GPIO_SPEED_FREQ_VERY_HIGH,
     };
 
+    enum class state_t : bool
+    {
+        SET   = GPIO_PIN_SET,
+        RESET = GPIO_PIN_RESET,
+    };
+
+    using interrupt_id_t = int;
+
     GPIO( GPIO::port_t port, GPIO::pin_t pin );
     ~GPIO( void );
 
     void init( GPIO::mode_t mode,
                GPIO::speed_t speed,
-               GPIO::pull_t pull = GPIO::pull_t::NO_PULL );
+               GPIO::pull_t pull    = GPIO::pull_t::NO_PULL,
+               GPIO::interrupt_id_t = 0 );
     void deinit( void );
 
     void set( void );
     void clear( void );
     void toggle( void );
     bool get( void );
+    void write( state_t state );
 
   private:
     GPIO::port_t port;
@@ -109,6 +119,7 @@ class GPIO
     GPIO::pull_t pull;
     GPIO::speed_t speed;
     GPIO::pin_t pin;
+    GPIO::interrupt_id_t irqn;
 };
 
 #endif // __GPIO_HPP__

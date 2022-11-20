@@ -12,8 +12,13 @@
 #include "i2c.hpp"
 
 /*** STM32 HAL ***/
+#if defined( STM32L4 )
+#include "stm32l4xx_hal.h"
+#include "stm32l4xx_hal_conf.h"
+#elif defined( STM32H7 )
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_conf.h"
+#endif
 
 #ifdef HAL_I2C_MODULE_ENABLED
 #define I2C_HANDLER( __h ) static_cast<I2C_HandleTypeDef *>( __h )

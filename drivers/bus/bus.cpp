@@ -1,30 +1,30 @@
 #include "bus.hpp"
 
-Bus::Bus( void )
+BUS::BUS( void )
 {
 }
 
-Bus::~Bus( void )
+BUS::~BUS( void )
 {
 }
 
-int Bus::enable_dma( os::event_attr_t *dma_event_config )
+int BUS::enable_dma( OS::event_attr_t *dma_event_config )
 {
-    this->dma_event = os::event_new( NULL );
+    this->dma_event = OS::event_new( NULL );
 
     return 0;
 }
 
-int Bus::init( void )
+int BUS::init( void )
 {
     return 0;
 }
 
-int Bus::deinit( void )
+int BUS::deinit( void )
 {
     return 0;
 }
-int Bus::read( void *data,
+int BUS::read( void *data,
                const uint32_t data_len,
                const uint32_t timeout,
                const uint16_t device_addr,
@@ -41,7 +41,7 @@ int Bus::read( void *data,
                       mem_addr_size );
 }
 
-int Bus::write( void *data,
+int BUS::write( void *data,
                 const uint32_t data_len,
                 const uint32_t timeout,
                 const uint16_t device_addr,
@@ -58,7 +58,7 @@ int Bus::write( void *data,
                       mem_addr_size );
 }
 
-int Bus::read_dma( void *data,
+int BUS::read_dma( void *data,
                    const uint32_t data_len,
                    const uint32_t timeout,
                    const uint16_t device_addr,
@@ -75,7 +75,7 @@ int Bus::read_dma( void *data,
                       mem_addr_size );
 }
 
-int Bus::write_dma( void *data,
+int BUS::write_dma( void *data,
                     const uint32_t data_len,
                     const uint32_t timeout,
                     const uint16_t device_addr,
@@ -92,7 +92,7 @@ int Bus::write_dma( void *data,
                       mem_addr_size );
 }
 
-void Bus::dma_interrupt_cb( dma_cb_type type )
+void BUS::dma_interrupt_cb( dma_cb_type type )
 {
     switch ( type )
     {
@@ -107,7 +107,7 @@ void Bus::dma_interrupt_cb( dma_cb_type type )
     }
 }
 
-int Bus::io_access( const io_direction_t direction,
+int BUS::io_access( const io_direction_t direction,
                     const bool dma_enabled,
                     void *data,
                     const uint32_t data_len,
@@ -121,15 +121,15 @@ int Bus::io_access( const io_direction_t direction,
     uint32_t begin            = 0;
     uint32_t remainingTimeout = timeout;
 
-    begin = os::get_tick();
+    begin = OS::get_tick();
 
-    e = os::mutex_acquire( this->mutex, timeout );
+    e = OS::mutex_acquire( this->mutex, timeout );
     if ( e != 0 )
     {
         return e;
     }
 
-    remainingTimeout -= os::get_tick() - begin;
+    remainingTimeout -= OS::get_tick() - begin;
 
     if ( true == dma_enabled )
     {
@@ -146,7 +146,7 @@ int Bus::io_access( const io_direction_t direction,
                 static_cast<int>( dma_cb_type::DMA_COMPLETE_WRITE_HALF );
         }
 
-        e = os::event_clear( this->dma_event, eventMask );
+        e = OS::event_clear( this->dma_event, eventMask );
         if ( e != 0 )
         {
             return e;
@@ -190,14 +190,14 @@ int Bus::io_access( const io_direction_t direction,
 
     if ( true == dma_enabled )
     {
-        e = os::event_wait( this->dma_event, eventMask, 0, timeout );
+        e = OS::event_wait( this->dma_event, eventMask, 0, timeout );
         if ( e != 0 )
         {
             return e;
         }
     }
 
-    os::mutex_release( this->mutex );
+    OS::mutex_release( this->mutex );
 
     return e;
 }

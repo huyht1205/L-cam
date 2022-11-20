@@ -10,19 +10,42 @@ enum class DeviceState
     SLEEP,
 };
 
-class Device
+class DEVICE
 {
   public:
-    Device( void );
-    ~Device( void );
-    virtual int init( void );
-    virtual int deinit( void );
-    virtual int on( void );
-    virtual int off( void );
-    virtual int sleep( void );
+    DEVICE( void );
+    ~DEVICE( void );
 
-    virtual DeviceState get_state( void );
+    virtual int init( void )
+    {
+        return 0;
+    }
+
+    virtual int deinit( void )
+    {
+        return 0;
+    }
+
+    virtual int on( void )
+    {
+        return 0;
+    }
+
+    virtual int off( void )
+    {
+        return 0;
+    }
+
+    virtual int sleep( void )
+    {
+        return 0;
+    }
+
+    DeviceState get_state( void );
     char name [ 16 ];
+
+  protected:
+    DeviceState state;
 };
 
 #endif // __DEVICE_HPP__
