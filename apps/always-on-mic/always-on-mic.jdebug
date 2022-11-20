@@ -29,9 +29,12 @@ void OnProjectLoad (void) {
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
+  Project.AddSvdFile ("/Users/hoanghuy/data/storage/01-LONG-TERM-STORAGE/svd/STM32L4_svd_V1.2/STM32L4x5.svd");
+
   //
   // User settings
   //
+  Project.SetOSPlugin ("FreeRTOSPlugin");
   File.Open ("$(ProjectDir)/build/always-on-mic.elf");
 }
 

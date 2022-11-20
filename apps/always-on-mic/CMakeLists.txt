@@ -15,11 +15,13 @@ include("project-config.cmake")
 include("cmake/path.cmake")
 include("drivers/drivers.cmake")
 include("bsp/${BSP}/${BSP}.cmake")
-include("os/${OS}/${OS}.cmake")
+include("os/os.cmake")
+include("error/error.cmake")
 
 include_directories(
     .
     inc
+    bsp/${BSP}
     )
 
 add_compile_options(
@@ -30,6 +32,7 @@ link_libraries(
 
 set(APP_SOURCES
     src/app.cpp
+    bsp/${BSP}/bsp.cpp
     )
 
 set(SOURCES
