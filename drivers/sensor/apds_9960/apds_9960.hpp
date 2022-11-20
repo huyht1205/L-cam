@@ -18,7 +18,7 @@
 class APDS_9960 : public DEVICE
 {
   public:
-    APDS_9960( I2C *bus, GPIO *interrupt_pin, uint8_t addr = 0x39 );
+    APDS_9960( I2C *bus, GPIO *interrupt_pin, uint8_t addr = ( 0x39 << 1 ) );
     ~APDS_9960( void );
 
     int init( void ) override;
