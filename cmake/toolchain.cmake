@@ -22,7 +22,9 @@ add_compile_options(
 # For C++
 add_compile_options(
     -fno-exceptions # Remove exception to save FLASH
+    -fno-unwind-tables
     -fstack-usage
+    -nostdlib
     )
 
 add_compile_options(

@@ -14,7 +14,7 @@ set(PROJECT_NAME "always-on-mic")
 include("project-config.cmake")
 include("cmake/path.cmake")
 include("drivers/drivers.cmake")
-include("bsp/${BSP}/${BSP}.cmake")
+include("bsp/${BSP}/bsp.cmake")
 include("os/os.cmake")
 include("error/error.cmake")
 include("lib/lib.cmake")
@@ -33,9 +33,6 @@ link_libraries(
 
 set(APP_SOURCES
     src/app.cpp
-    bsp/${BSP}/bsp.cpp
-    bsp/${BSP}/bsp_system_clock.cpp
-    bsp/${BSP}/bsp_interrupt_handler.cpp
     )
 
 set(SOURCES
