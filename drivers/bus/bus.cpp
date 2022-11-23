@@ -3,7 +3,7 @@
  * @author Luck Hoang (huyht1205@pm.me)
  * @brief
  * @version 0.1
- * @date 2022-11-20
+ * @date 2022-11-23
  *
  * @copyright Copyright (c) 2022
  *
@@ -12,213 +12,47 @@
 #include "bus.hpp"
 #include "error.hpp"
 
-BUS::BUS( void )
+BUS::BUS_BASE::BUS_BASE( void *handler, BUS::platform_init_fPtr init_fPtr )
 {
-}
+    this->handler       = handler;
+    this->platform_init = init_fPtr;
 
-BUS::~BUS( void )
-{
-}
-
-int BUS::enable_dma( OS::event_attr_t *dma_event_config )
-{
+    this->mutex     = OS::mutex_new( nullptr );
     this->dma_event = OS::event_new( NULL );
-
-    return 0;
 }
 
-int BUS::init( void )
+int BUS::BUS_BASE::init( void )
 {
-    dma_event = OS::event_new( nullptr );
-    mutex     = OS::mutex_new( nullptr );
+    this->platform_init();
 
-    return 0;
+    return NO_ERROR;
 }
 
-int BUS::deinit( void )
+int BUS::BUS_BASE::deinit( void )
 {
-    return 0;
-}
-int BUS::read( void *data,
-               const uint32_t data_len,
-               const uint32_t timeout,
-               const uint16_t device_addr,
-               const uint16_t mem_addr,
-               const uint16_t mem_addr_size )
-{
-    return io_access( io_direction_t::READ,
-                      false,
-                      data,
-                      data_len,
-                      timeout,
-                      device_addr,
-                      mem_addr,
-                      mem_addr_size );
+    return NO_ERROR;
 }
 
-int BUS::write( void *data,
-                const uint32_t data_len,
-                const uint32_t timeout,
-                const uint16_t device_addr,
-                const uint16_t mem_addr,
-                const uint16_t mem_addr_size )
+void BUS::BUS_BASE::dma_interrupt_callback( BUS::dma_cb_type type )
 {
-    return io_access( io_direction_t::WRITE,
-                      false,
-                      data,
-                      data_len,
-                      timeout,
-                      device_addr,
-                      mem_addr,
-                      mem_addr_size );
+    OS::event_set( dma_event, static_cast<uint32_t>( type ) );
 }
 
-int BUS::read_dma( void *data,
-                   const uint32_t data_len,
-                   const uint32_t timeout,
-                   const uint16_t device_addr,
-                   const uint16_t mem_addr,
-                   const uint16_t mem_addr_size )
+int BUS::BUS_BASE::clear_dma_event( io_direction_t direction, uint32_t *mask )
 {
-    return io_access( io_direction_t::READ,
-                      true,
-                      data,
-                      data_len,
-                      timeout,
-                      device_addr,
-                      mem_addr,
-                      mem_addr_size );
-}
-
-int BUS::write_dma( void *data,
-                    const uint32_t data_len,
-                    const uint32_t timeout,
-                    const uint16_t device_addr,
-                    const uint16_t mem_addr,
-                    const uint16_t mem_addr_size )
-{
-    return io_access( io_direction_t::WRITE,
-                      true,
-                      data,
-                      data_len,
-                      timeout,
-                      device_addr,
-                      mem_addr,
-                      mem_addr_size );
-}
-
-void BUS::dma_interrupt_cb( dma_cb_type type )
-{
-    switch ( type )
+    if ( ( static_cast<uint32_t>( BUS::io_direction_t::READ ) &
+           static_cast<uint32_t>( direction ) ) != 0 )
     {
-    case dma_cb_type::DMA_COMPLETE_WRITE_HALF:
-        break;
-    case dma_cb_type::DMA_COMPLETE_READ_HALF:
-        break;
-    case dma_cb_type::DMA_COMPLETE_WRITE_FULL:
-        break;
-    case dma_cb_type::DMA_COMPLETE_READ_FULL:
-        break;
-    }
-}
-
-int BUS::io_access( const io_direction_t direction,
-                    const bool dma_enabled,
-                    void *data,
-                    const uint32_t data_len,
-                    const uint32_t timeout,
-                    const uint16_t device_addr,
-                    const uint16_t mem_addr,
-                    const uint16_t mem_addr_size )
-{
-    int e                     = 0;
-    int nbyte                 = 0;
-    int eventMask             = 0;
-    uint32_t begin            = 0;
-    uint32_t remainingTimeout = timeout;
-
-    begin = OS::get_tick();
-
-    e = OS::mutex_acquire( this->mutex, timeout );
-    if ( e != 0 )
-    {
-        return e;
+        *mask |= static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_READ_FULL ) |
+                 static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_READ_HALF );
     }
 
-    remainingTimeout -= OS::get_tick() - begin;
-
-    if ( true == dma_enabled )
+    if ( ( static_cast<uint32_t>( BUS::io_direction_t::WRITE ) &
+           static_cast<uint32_t>( direction ) ) != 0 )
     {
-        if ( io_direction_t::READ == direction )
-        {
-            eventMask =
-                static_cast<int>( dma_cb_type::DMA_COMPLETE_READ_FULL ) |
-                static_cast<int>( dma_cb_type::DMA_COMPLETE_READ_HALF );
-        }
-        else
-        {
-            eventMask =
-                static_cast<int>( dma_cb_type::DMA_COMPLETE_WRITE_FULL ) |
-                static_cast<int>( dma_cb_type::DMA_COMPLETE_WRITE_HALF );
-        }
-
-        e = OS::event_clear( this->dma_event, eventMask );
-        if ( e != 0 )
-        {
-            return e;
-        }
+        *mask |= static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_WRITE_FULL ) |
+                 static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_WRITE_HALF );
     }
 
-    if ( io_direction_t::READ == direction )
-    {
-        if ( true == dma_enabled )
-        {
-            e = this->hal_read_dma(
-                data, data_len, device_addr, mem_addr, mem_addr_size );
-        }
-        else
-        {
-            e = this->hal_read( data,
-                                data_len,
-                                remainingTimeout,
-                                device_addr,
-                                mem_addr,
-                                mem_addr_size );
-        }
-    }
-    else
-    {
-        if ( true == dma_enabled )
-        {
-            e = this->hal_write_dma(
-                data, data_len, device_addr, mem_addr, mem_addr_size );
-        }
-        else
-        {
-            e = this->hal_write( data,
-                                 data_len,
-                                 remainingTimeout,
-                                 device_addr,
-                                 mem_addr,
-                                 mem_addr_size );
-        }
-    }
-
-    if ( e >= 0 )
-    {
-        nbyte = e;
-    }
-
-    if ( true == dma_enabled )
-    {
-        e = OS::event_wait( this->dma_event, eventMask, 0, timeout );
-        if ( e != NO_ERROR )
-        {
-            return e;
-        }
-    }
-
-    OS::mutex_release( this->mutex );
-
-    return nbyte;
+    return OS::event_clear( this->dma_event, *mask );
 }

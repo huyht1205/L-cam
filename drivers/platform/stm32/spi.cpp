@@ -1,19 +1,16 @@
 /**
- * @file i2c.cpp
+ * @file spi.cpp
  * @author Hoang Trung Huy (huyht1205@pm.me)
  * @brief
  * @version 0.1
- * @date 2022-11-17
+ * @date 2022-11-22
  *
  * @copyright Copyright (c) 2022
  *
  */
 
-#include <stdint.h>
-
+#include "spi.hpp"
 #include "error.hpp"
-#include "i2c.hpp"
-#include "os.hpp"
 
 /*** STM32 HAL ***/
 #if defined( STM32L4 )
@@ -24,22 +21,21 @@
 #include "stm32h7xx_hal_conf.h"
 #endif
 
-#ifdef HAL_I2C_MODULE_ENABLED
-#define I2C_HANDLER( __h ) static_cast<I2C_HandleTypeDef *>( __h )
+#ifdef HAL_SPI_MODULE_ENABLED
+#define SPI_HANDLER( __h ) static_cast<SPI_HandleTypeDef *>( __h )
 
-int I2C::deinit( void )
+int SPI::deinit( void )
 {
-    return -HAL_I2C_DeInit( I2C_HANDLER( this->handler ) );
+    return -HAL_SPI_DeInit( SPI_HANDLER( this->handler ) );
 }
 
-int I2C::io_access( const BUS::io_direction_t direction,
+int SPI::io_access( const BUS::io_direction_t direction,
                     const bool dma_enabled,
-                    void *data,
+                    void *tx_data,
+                    void *rx_buff,
                     const uint32_t data_len,
-                    const uint32_t timeout,
-                    const uint16_t device_addr,
-                    const uint16_t mem_addr,
-                    const uint16_t mem_addr_size )
+                    const uint32_t timeout )
+
 {
     int e                     = 0;
     HAL_StatusTypeDef hal_e   = HAL_ERROR;
@@ -70,20 +66,30 @@ int I2C::io_access( const BUS::io_direction_t direction,
     {
         if ( true == dma_enabled )
         {
-            hal_e = HAL_I2C_Mem_Read_DMA( I2C_HANDLER( handler ),
-                                          device_addr,
-                                          mem_addr,
-                                          mem_addr_size,
-                                          static_cast<uint8_t *>( data ),
+            hal_e = HAL_SPI_Receive_DMA( SPI_HANDLER( handler ),
+                                         static_cast<uint8_t *>( rx_buff ),
+                                         data_len );
+        }
+        else
+        {
+            hal_e = HAL_SPI_Receive( SPI_HANDLER( handler ),
+                                     static_cast<uint8_t *>( rx_buff ),
+                                     data_len,
+                                     remainingTimeout );
+        }
+    }
+    else if ( BUS::io_direction_t::WRITE == direction )
+    {
+        if ( true == dma_enabled )
+        {
+            hal_e = HAL_SPI_Transmit_DMA( SPI_HANDLER( handler ),
+                                          static_cast<uint8_t *>( tx_data ),
                                           data_len );
         }
         else
         {
-            hal_e = HAL_I2C_Mem_Read( I2C_HANDLER( handler ),
-                                      device_addr,
-                                      mem_addr,
-                                      mem_addr_size,
-                                      static_cast<uint8_t *>( data ),
+            hal_e = HAL_SPI_Transmit( SPI_HANDLER( handler ),
+                                      static_cast<uint8_t *>( tx_data ),
                                       data_len,
                                       remainingTimeout );
         }
@@ -92,22 +98,19 @@ int I2C::io_access( const BUS::io_direction_t direction,
     {
         if ( true == dma_enabled )
         {
-            hal_e = HAL_I2C_Mem_Write_DMA( I2C_HANDLER( handler ),
-                                           device_addr,
-                                           mem_addr,
-                                           mem_addr_size,
-                                           static_cast<uint8_t *>( data ),
-                                           data_len );
+            hal_e =
+                HAL_SPI_TransmitReceive_DMA( SPI_HANDLER( handler ),
+                                             static_cast<uint8_t *>( tx_data ),
+                                             static_cast<uint8_t *>( rx_buff ),
+                                             data_len );
         }
         else
         {
-            hal_e = HAL_I2C_Mem_Write( I2C_HANDLER( handler ),
-                                       device_addr,
-                                       mem_addr,
-                                       mem_addr_size,
-                                       static_cast<uint8_t *>( data ),
-                                       data_len,
-                                       remainingTimeout );
+            hal_e = HAL_SPI_TransmitReceive( SPI_HANDLER( handler ),
+                                             static_cast<uint8_t *>( tx_data ),
+                                             static_cast<uint8_t *>( rx_buff ),
+                                             data_len,
+                                             remainingTimeout );
         }
     }
 
@@ -139,5 +142,4 @@ int I2C::io_access( const BUS::io_direction_t direction,
 
     return nbyte;
 }
-
-#endif // HAL_I2C_MODULE_ENABLED
+#endif // HAL_SPI_MODULE_ENABLED

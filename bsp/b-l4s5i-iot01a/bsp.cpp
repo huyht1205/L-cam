@@ -9,33 +9,31 @@
  *
  */
 
-#include "bsp.hpp"
 #include "main.h"
 #include "cmsis_os.h"
-#include "crc.h"
-#include "dma.h"
-#include "usart.h"
-#include "rng.h"
-#include "rtc.h"
-#include "gpio.h"
-#include "gpio.hpp"
+#include "adc.h"
+#include "dfsdm.h"
 #include "i2c.h"
+#include "octospi.h"
+#include "rtc.h"
+#include "spi.h"
+#include "usart.h"
+#include "usb_otg.h"
+#include "gpio.h"
 
-/*** GPIO ***/
-static GPIO led_g = GPIO( GPIO::port_t::C, GPIO::pin_t::PIN_7 );
-static GPIO led_b = GPIO( GPIO::port_t::B, GPIO::pin_t::PIN_7 );
-static GPIO led_r = GPIO( GPIO::port_t::B, GPIO::pin_t::PIN_14 );
+#include "os.hpp"
+#include "system_clock.hpp"
+#include "bsp.hpp"
+#include "i2c.hpp"
+#include "spi.hpp"
 
-LED_RGB_GPIO BSP::led = LED_RGB_GPIO( &led_r, &led_g, &led_b, false );
+/*** STM32 INTERFACES ***/
+static void _stm32_interface_init( void );
 
-static void _gpio_init( void );
-
-/*** I2C ***/
-static I2C i2c1 = I2C( static_cast<void *>( &hi2c1 ), &MX_I2C1_Init );
-static void _i2c_init( void );
+static I2C m_i2c1 = I2C( &hi2c1, &MX_I2C1_Init );
+static I2C m_i2c2 = I2C( &hi2c2, &MX_I2C2_Init );
 
 /*** DEVICES ***/
-APDS_9960 BSP::apds_9960( &i2c1, nullptr );
 OS::event_id_t BSP::device_interrupt_evt;
 
 extern void system_clock_max_performance( void );
@@ -61,34 +59,30 @@ void BSP::init( void )
     system_clock.switch_profile(
         SYSTEM_CLOCK::clock_profile_t::MAX_PERFORMANCE );
 
-    MX_DMA_Init();
-    MX_LPUART1_UART_Init();
-    MX_CRC_Init();
-    MX_RNG_Init();
+    MX_SPI1_Init();
+    MX_SPI3_Init();
+    MX_UART4_Init();
+    MX_USART1_UART_Init();
+    MX_USART2_UART_Init();
+    MX_USART3_UART_Init();
+    MX_USB_OTG_FS_USB_Init();
     MX_RTC_Init();
 }
 
 void BSP::init_peripherals( void )
 {
-    _gpio_init();
-    _i2c_init();
+    _stm32_interface_init();
 
     device_interrupt_evt = OS::event_new( nullptr );
-
-    apds_9960.init();
-    HAL_NVIC_EnableIRQ( EXTI0_IRQn );
 }
 
-static void _gpio_init( void )
+static void _stm32_interface_init( void )
 {
     MX_GPIO_Init();
+    MX_ADC1_Init();
+    MX_DFSDM1_Init();
+    MX_OCTOSPI1_Init();
 
-    led_b.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
-    led_g.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
-    led_r.init( GPIO::mode_t::GPIO_OUTPUT_PP, GPIO::speed_t::LOW );
-}
-
-static void _i2c_init( void )
-{
-    i2c1.init();
+    m_i2c1.init();
+    m_i2c2.init();
 }

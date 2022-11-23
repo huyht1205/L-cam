@@ -163,12 +163,12 @@ int APDS_9960::init( void )
     e = bus->read( &id, sizeof( id ), 1000, addr, REG_ID_R, 1 );
     if ( e != sizeof( id ) )
     {
-        return -ERRNO_ADPS_9960_READ_ID_BUS_RD;
+        return ERR_APDS_9960_INIT_READ_ID;
     }
 
     if ( id != DEVICE_ID )
     {
-        return -ERRNO_ADPS_9960_READ_ID_WRONG;
+        return -ERR_APDS_9960_INIT_WRONG_ID;
     }
 
     state   = DEVICE::state_t::READY;
@@ -193,7 +193,7 @@ int APDS_9960::on( void )
     e = bus->write( &data, sizeof( data ), 1000, addr, REG_ENABLE_R_W, 1 );
     if ( e < 0 )
     {
-        return -ERRNO_ADPS_9960_ON_BUS_WR;
+        return ERR_APDS_9960_ON;
     }
 
     this->state = DEVICE::state_t::ON;
@@ -208,7 +208,7 @@ int APDS_9960::off( void )
     e = bus->write( &data, sizeof( data ), 1000, addr, REG_ENABLE_R_W, 1 );
     if ( e < 0 )
     {
-        return -ERRNO_ADPS_9960_ON_BUS_WR;
+        return -ERR_APDS_9960_OFF;
     }
 
     state = DEVICE::state_t::OFF;
@@ -238,7 +238,7 @@ void APDS_9960::handle_measured_data_upon_interrupt( void )
         e = bus->read( &status, sizeof( status ), 1000, addr, REG_STATUS_R, 1 );
         if ( e != sizeof( status ) )
         {
-            this->error = -ERRNO_ADPS_9960_IRQ_STATUS_BUS_RD;
+            this->error = ERR_APDS_9960_IRQ_READ_STATUS;
         }
 
         if ( ( feature & feature_t::als_interrupt ) ==
@@ -277,19 +277,19 @@ void APDS_9960::handle_measured_data_upon_interrupt( void )
     e = bus->write( &dummy, 1, 1000, addr, REG_PICLEAR_W, 1 );
     if ( e != 1 )
     {
-        this->error = -ERRNO_ADPS_9960_IRQ_PICLEAR_BUS_WR;
+        this->error = ERR_APDS_9960_IRQ_PICLEAR | e;
     }
 
     e = bus->write( &dummy, 1, 1000, addr, REG_CICLEAR_W, 1 );
     if ( e != 1 )
     {
-        this->error = -ERRNO_ADPS_9960_IRQ_PICLEAR_BUS_WR;
+        this->error = ERR_APDS_9960_IRQ_CICLEAR | e;
     }
 
     e = bus->write( &dummy, 1, 1000, addr, REG_AICLEAR_W, 1 );
     if ( e != 1 )
     {
-        this->error = -ERRNO_ADPS_9960_IRQ_PICLEAR_BUS_WR;
+        this->error = ERR_APDS_9960_IRQ_AICLEAR | e;
     }
 }
 
@@ -308,7 +308,7 @@ int APDS_9960::handle_als_interrupt( void )
     e = bus->read( &rgb_data, 8, 1000, addr, REG_CDATAL_R, 1 );
     if ( e != 8 )
     {
-        return -ERRNO_ADPS_9960_IRQ_RGBC_BUS_RD;
+        return ERR_APDS_9960_IRQ_RGBC;
     }
 
     return NO_ERROR;
