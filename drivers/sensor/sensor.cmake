@@ -3,5 +3,5 @@ include_directories(
     )
 
 set(SENSOR_SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/apds_9960/apds_9960.cpp
+    # ${CMAKE_CURRENT_LIST_DIR}/apds_9960/apds_9960.cpp
     )

@@ -12,9 +12,9 @@
 #ifndef __BSP_HPP__
 #define __BSP_HPP__
 
-#include "i2c.hpp"
 #include "gpio.hpp"
 #include "led.hpp"
+#include "os.hpp"
 #include "bsp_system_clock.hpp"
 #include "system_clock.hpp"
 

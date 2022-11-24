@@ -22,12 +22,12 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
-  Project.AddPathSubstitute ("/Users/hoanghuy/workspace/L-cam/apps/always-on-mic", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/users/hoanghuy/workspace/l-cam/apps/always-on-mic", "$(ProjectDir)");
-  Project.SetDevice ("STM32L4R5ZI");
+  Project.SetDevice ("STM32L4S5VI");
   Project.SetHostIF ("USB", "");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
+  Project.AddPathSubstitute ("/Users/hoanghuy/workspace/L-cam/apps/always-on-mic", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/users/hoanghuy/workspace/l-cam/apps/always-on-mic", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
   Project.AddSvdFile ("/Users/hoanghuy/data/storage/01-LONG-TERM-STORAGE/svd/STM32L4_svd_V1.2/STM32L4x5.svd");
 

@@ -25,13 +25,16 @@
 #include "system_clock.hpp"
 #include "bsp.hpp"
 #include "i2c.hpp"
-#include "spi.hpp"
+// #include "spi.hpp"
 
 /*** STM32 INTERFACES ***/
 static void _stm32_interface_init( void );
 
 static I2C m_i2c1 = I2C( &hi2c1, &MX_I2C1_Init );
 static I2C m_i2c2 = I2C( &hi2c2, &MX_I2C2_Init );
+
+// static SPI m_spi1 = SPI( &hspi1, MX_SPI1_Init );
+// static SPI m_spi3 = SPI( &hspi3, MX_SPI3_Init );
 
 /*** DEVICES ***/
 OS::event_id_t BSP::device_interrupt_evt;

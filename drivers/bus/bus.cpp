@@ -12,7 +12,7 @@
 #include "bus.hpp"
 #include "error.hpp"
 
-BUS::BUS_BASE::BUS_BASE( void *handler, BUS::platform_init_fPtr init_fPtr )
+BUS::BUS( void *handler, platform_init_fPtr init_fPtr )
 {
     this->handler       = handler;
     this->platform_init = init_fPtr;
@@ -21,37 +21,37 @@ BUS::BUS_BASE::BUS_BASE( void *handler, BUS::platform_init_fPtr init_fPtr )
     this->dma_event = OS::event_new( NULL );
 }
 
-int BUS::BUS_BASE::init( void )
+int BUS::BUS::init( void )
 {
     this->platform_init();
 
     return NO_ERROR;
 }
 
-int BUS::BUS_BASE::deinit( void )
+int BUS::BUS::deinit( void )
 {
     return NO_ERROR;
 }
 
-void BUS::BUS_BASE::dma_interrupt_callback( BUS::dma_cb_type type )
+void BUS::BUS::dma_interrupt_callback( dma_cb_type type )
 {
     OS::event_set( dma_event, static_cast<uint32_t>( type ) );
 }
 
-int BUS::BUS_BASE::clear_dma_event( io_direction_t direction, uint32_t *mask )
+int BUS::BUS::clear_dma_event( io_direction_t direction, uint32_t *mask )
 {
-    if ( ( static_cast<uint32_t>( BUS::io_direction_t::READ ) &
+    if ( ( static_cast<uint32_t>( io_direction_t::READ ) &
            static_cast<uint32_t>( direction ) ) != 0 )
     {
-        *mask |= static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_READ_FULL ) |
-                 static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_READ_HALF );
+        *mask |= static_cast<int>( dma_cb_type::DMA_COMPLETE_READ_FULL ) |
+                 static_cast<int>( dma_cb_type::DMA_COMPLETE_READ_HALF );
     }
 
-    if ( ( static_cast<uint32_t>( BUS::io_direction_t::WRITE ) &
+    if ( ( static_cast<uint32_t>( io_direction_t::WRITE ) &
            static_cast<uint32_t>( direction ) ) != 0 )
     {
-        *mask |= static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_WRITE_FULL ) |
-                 static_cast<int>( BUS::dma_cb_type::DMA_COMPLETE_WRITE_HALF );
+        *mask |= static_cast<int>( dma_cb_type::DMA_COMPLETE_WRITE_FULL ) |
+                 static_cast<int>( dma_cb_type::DMA_COMPLETE_WRITE_HALF );
     }
 
     return OS::event_clear( this->dma_event, *mask );

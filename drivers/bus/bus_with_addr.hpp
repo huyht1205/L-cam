@@ -1,16 +1,20 @@
-#ifndef __BUS_I2C_HPP__
-#define __BUS_I2C_HPP__
+/**
+ * @file bus_with_addr.hpp
+ * @author Luck Hoang (huyht1205@pm.me)
+ * @brief
+ * @version 0.1
+ * @date 2022-11-24
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
+#ifndef __BUS_WITH_ADDR_HPP__
+#define __BUS_WITH_ADDR_HPP__
 
 #include "bus.hpp"
 
-namespace BUS
-{
-
-/**
- * @brief Base abstract class for I2C bus
- *
- */
-class I2C : public BUS::BUS_BASE
+class BUS_WITH_ADDRESS : public BUS
 {
   public:
     /**
@@ -30,7 +34,17 @@ class I2C : public BUS::BUS_BASE
               const uint32_t timeout,
               const uint16_t device_addr,
               const uint16_t mem_addr,
-              const uint16_t mem_addr_size );
+              const uint16_t mem_addr_size )
+    {
+        return io_access( BUS::io_direction_t::READ,
+                          false,
+                          data,
+                          data_len,
+                          timeout,
+                          device_addr,
+                          mem_addr,
+                          mem_addr_size );
+    }
 
     /**
      * @brief Blocking write data to bus without DMA.
@@ -49,7 +63,17 @@ class I2C : public BUS::BUS_BASE
                const uint32_t timeout,
                const uint16_t device_addr,
                const uint16_t mem_addr,
-               const uint16_t mem_addr_size );
+               const uint16_t mem_addr_size )
+    {
+        return io_access( BUS::io_direction_t::WRITE,
+                          false,
+                          data,
+                          data_len,
+                          timeout,
+                          device_addr,
+                          mem_addr,
+                          mem_addr_size );
+    }
 
     /**
      * @brief Blocking read data from bus with DMA.
@@ -68,7 +92,17 @@ class I2C : public BUS::BUS_BASE
                   const uint32_t timeout,
                   const uint16_t device_addr,
                   const uint16_t mem_addr,
-                  const uint16_t mem_addr_size );
+                  const uint16_t mem_addr_size )
+    {
+        return io_access( BUS::io_direction_t::READ,
+                          true,
+                          data,
+                          data_len,
+                          timeout,
+                          device_addr,
+                          mem_addr,
+                          mem_addr_size );
+    }
 
     /**
      * @brief Blocking write data to bus with DMA.
@@ -87,29 +121,64 @@ class I2C : public BUS::BUS_BASE
                    const uint32_t timeout,
                    const uint16_t device_addr,
                    const uint16_t mem_addr,
-                   const uint16_t mem_addr_size );
+                   const uint16_t mem_addr_size )
+    {
+        return io_access( BUS::io_direction_t::WRITE,
+                          true,
+                          data,
+                          data_len,
+                          timeout,
+                          device_addr,
+                          mem_addr,
+                          mem_addr_size );
+    }
 
   protected:
-    I2C( void )
+    BUS_WITH_ADDRESS( void *handler, platform_init_fPtr init_fPtr )
+        : BUS::BUS( handler, init_fPtr )
     {
     }
-    I2C( void *handler, BUS::platform_init_fPtr init_fPtr )
-        : BUS::BUS_BASE::BUS_BASE( handler, init_fPtr )
+    BUS_WITH_ADDRESS( void )
     {
     }
-    virtual ~I2C( void )
+    virtual ~BUS_WITH_ADDRESS( void )
     {
     }
 
-    virtual int io_access( const BUS::io_direction_t direction,
+    virtual int io_access( const io_direction_t direction,
                            const bool dma_enabled,
                            void *data,
                            const uint32_t data_len,
                            const uint32_t timeout,
                            const uint16_t device_addr,
                            const uint16_t mem_addr,
-                           const uint16_t mem_addr_size ) = 0;
-};
-}; // namespace BUS
+                           const uint16_t mem_addr_size );
 
-#endif // __BUS_I2C_HPP__
+    virtual int hal_read( void *data,
+                          const uint32_t data_len,
+                          const uint32_t timeout,
+                          const uint16_t device_addr,
+                          const uint16_t mem_addr,
+                          const uint16_t mem_addr_size ) = 0;
+
+    virtual int hal_write( void *data,
+                           const uint32_t data_len,
+                           const uint32_t timeout,
+                           const uint16_t device_addr,
+                           const uint16_t mem_addr,
+                           const uint16_t mem_addr_size ) = 0;
+
+    virtual int hal_read_dma( void *data,
+                              const uint32_t data_len,
+                              const uint16_t device_addr,
+                              const uint16_t mem_addr,
+                              const uint16_t mem_addr_size ) = 0;
+
+    virtual int hal_write_dma( void *data,
+                               const uint32_t data_len,
+                               const uint16_t device_addr,
+                               const uint16_t mem_addr,
+                               const uint16_t mem_addr_size ) = 0;
+};
+
+#endif // __BUS_WITH_ADDR_HPP__

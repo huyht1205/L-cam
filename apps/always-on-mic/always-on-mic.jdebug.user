@@ -1,24 +1,27 @@
 
-OpenDocument="device.hpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/device/device.hpp", Line=41
-OpenDocument="bsp_interrupt_handler.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/bsp_interrupt_handler.cpp", Line=0
-OpenDocument="stm32l4xx_hal_gpio.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c", Line=503
-OpenDocument="bsp_system_clock.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/bsp_system_clock.cpp", Line=4
+Breakpoint=/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/src/app.cpp:22, State=BP_STATE_ON
+OpenDocument="stm32l4xx_hal_pwr_ex.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c", Line=152
+OpenDocument="stm32l4xx_hal.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c", Line=141
+OpenDocument="startup_stm32l4s5xx.s", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/startup_stm32l4s5xx.s", Line=50
+OpenDocument="device.hpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/device/device.hpp", Line=29
+OpenDocument="bsp_interrupt_handler.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/bsp_interrupt_handler.cpp", Line=0
+OpenDocument="stm32l4xx_hal_gpio.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c", Line=503
+OpenDocument="bsp_system_clock.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/bsp_system_clock.cpp", Line=12
 OpenDocument="system_clock.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/platform/stm32/system_clock.cpp", Line=0
-OpenDocument="stm32l4xx_hal_i2c.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c", Line=2548
-OpenDocument="tasks.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3628
-OpenDocument="bus.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/bus/bus.cpp", Line=156
+OpenDocument="stm32l4xx_hal_i2c.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c", Line=2548
+OpenDocument="tasks.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3628
+OpenDocument="bus.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/bus/bus.cpp", Line=14
 OpenDocument="i2c.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/platform/stm32/i2c.cpp", Line=54
-OpenDocument="app.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/src/app.cpp", Line=48
+OpenDocument="app.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/src/app.cpp", Line=9
 OpenDocument="apds_9960.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/sensor/apds_9960/apds_9960.cpp", Line=265
-OpenDocument="cmsis_os2.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c", Line=1218
-OpenDocument="cmsis_gcc.h", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Drivers/CMSIS/Include/cmsis_gcc.h", Line=265
-OpenDocument="OS.hpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/os/OS.hpp", Line=39
-OpenDocument="bsp.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/bsp.cpp", Line=47
+OpenDocument="cmsis_os2.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c", Line=1218
+OpenDocument="cmsis_gcc.h", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/CMSIS/Include/cmsis_gcc.h", Line=265
+OpenDocument="bsp.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/bsp.cpp", Line=43
 OpenDocument="led.cpp", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/drivers/led/led.cpp", Line=74
-OpenDocument="stm32l4xx_hal_rcc.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c", Line=532
-OpenDocument="main.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Core/Src/main.c", Line=63
+OpenDocument="stm32l4xx_hal_rcc.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c", Line=532
+OpenDocument="main.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Core/Src/main.c", Line=63
 OpenDocument="startup_stm32l4r5xx.s", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/startup_stm32l4r5xx.s", Line=50
-OpenDocument="i2c.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/nucleo-l4r5zi-p/Core/Src/i2c.c", Line=21
+OpenDocument="i2c.c", FilePath="/Users/hoanghuy/workspace/L-cam/apps/always-on-mic/bsp/b-l4s5i-iot01a/Core/Src/i2c.c", Line=21
 OpenToolbar="File", Floating=0, x=1, y=0
 OpenToolbar="Debug", Floating=0, x=0, y=0
 OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=1, w=813, h=312, TabPos=4, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
@@ -30,15 +33,15 @@ OpenWindow="Global Data", DockArea=RIGHT, x=0, y=1, w=813, h=312, TabPos=0, TopO
 OpenWindow="Local Data", DockArea=RIGHT, x=0, y=1, w=813, h=312, TabPos=2, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=1, w=813, h=312, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="FreeRTOS", DockArea=BOTTOM, x=1, y=0, w=699, h=331, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, Showing="Task List"
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Size";"Refresh";"Access"], ColWidths=[223;301;100;42;100;100]
-TableHeader="Global Data", SortCol="Value", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[193;218;85;71;182;0;314]
-TableHeader="Local Data", SortCol="Name", SortOrder="DESCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[246;369;133;63;220;0;290]
 TableHeader="Call Stack", SortCol="Function", SortOrder="ASCENDING", VisibleCols=["Function";"Stack Frame";"Source";"PC";"Return Address";"Stack Used"], ColWidths=[243;128;173;77;157;100]
-TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[189;163;447]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[189;163;446]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Size";"Refresh";"Access"], ColWidths=[223;301;100;42;100;47]
+TableHeader="Global Data", SortCol="Value", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[193;218;85;71;182;0;100]
 TableHeader="Vector Catches", SortCol="", SortOrder="ASCENDING", VisibleCols=["";"Vector Catch";"Description"], ColWidths=[50;300;500]
 TableHeader="Break & Tracepoints", SortCol="Location", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[50;84;157;355]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Task List", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Name";"Run Count";"Priority";"Status";"Timeout";"Stack Info (Free / Size)";"ID";"Mutex Count";"Notified Value";"Notify State"], ColWidths=[110;110;110;110;110;110;110;110;110;110]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="Local Data", SortCol="Name", SortOrder="DESCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Access";"Scope"], ColWidths=[246;369;133;63;220;0;164]
 TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;343]
 WatchedExpression="apds_9960", Window=Watched Data 1
