@@ -25,7 +25,8 @@
 #include "system_clock.hpp"
 #include "bsp.hpp"
 #include "i2c.hpp"
-// #include "spi.hpp"
+#include "spi.hpp"
+#include "uart.hpp"
 
 /*** STM32 INTERFACES ***/
 static void _stm32_interface_init( void );
@@ -33,8 +34,13 @@ static void _stm32_interface_init( void );
 static I2C m_i2c1 = I2C( &hi2c1, &MX_I2C1_Init );
 static I2C m_i2c2 = I2C( &hi2c2, &MX_I2C2_Init );
 
-// static SPI m_spi1 = SPI( &hspi1, MX_SPI1_Init );
-// static SPI m_spi3 = SPI( &hspi3, MX_SPI3_Init );
+static SPI m_spi1 = SPI( &hspi1, MX_SPI1_Init );
+static SPI m_spi3 = SPI( &hspi3, MX_SPI3_Init );
+
+UART m_uart1 = UART( &huart1, MX_USART1_UART_Init );
+static UART m_uart2 = UART( &huart2, MX_USART2_UART_Init );
+static UART m_uart3 = UART( &huart3, MX_USART3_UART_Init );
+static UART m_uart4 = UART( &huart4, MX_UART4_Init );
 
 /*** DEVICES ***/
 OS::event_id_t BSP::device_interrupt_evt;
@@ -62,12 +68,6 @@ void BSP::init( void )
     system_clock.switch_profile(
         SYSTEM_CLOCK::clock_profile_t::MAX_PERFORMANCE );
 
-    MX_SPI1_Init();
-    MX_SPI3_Init();
-    MX_UART4_Init();
-    MX_USART1_UART_Init();
-    MX_USART2_UART_Init();
-    MX_USART3_UART_Init();
     MX_USB_OTG_FS_USB_Init();
     MX_RTC_Init();
 }
@@ -88,4 +88,12 @@ static void _stm32_interface_init( void )
 
     m_i2c1.init();
     m_i2c2.init();
+
+    m_spi1.init();
+    m_spi3.init();
+
+    m_uart1.init();
+    m_uart2.init();
+    m_uart3.init();
+    m_uart4.init();
 }

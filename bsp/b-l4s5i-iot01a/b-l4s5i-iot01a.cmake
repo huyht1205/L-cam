@@ -54,6 +54,7 @@ set(BSP_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
 	${CMAKE_CURRENT_LIST_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+	${CMAKE_CURRENT_LIST_DIR}/Core/Src/dma.c
 	${CMAKE_CURRENT_LIST_DIR}/startup_stm32l4s5xx.s
 	)
 
